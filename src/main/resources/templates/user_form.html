@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<div th:include="style">style</div>		
+	    <title>Sign-in/Register</title>
+	</head>
+	<body class="container blue-grey">  		
+	   
+		<div class="row">
+			<div class="col s4 offset-s4">
+				<div class="center">          	
+					<span th:include="_warnings"> warnings </span>	
+				</div>
+				<h5 class="center">Sign-in/Register</h5>
+				
+				<div class="card amber">
+					<div class="card-content black-text">
+				    	<form class="form-horizontal" action="#" th:action="@{/login}" th:object="${user}" method="post">
+			
+						<div class="input-field">
+							<label class="active" for="email">Email</label>
+				    		<input type="text" th:field="*{email}"/>
+				    		<ul>
+  								<li class="red-text" th:each="err : ${#fields.errors('email')}" th:text="|Email ${err}|" />
+							</ul>
+						</div>
+						
+						<div class="input-field">
+							<label class="active" for="password">Password</label>
+				    		<input type="password" th:field="*{password}"/>
+				    		<ul>
+  								<li class="red-text" th:each="err : ${#fields.errors('password')}" th:text="|Password ${err}|" />
+							</ul>
+						</div>
+						
+				            <div class="form-actions center">
+				        	<input class="btn-large green" type="submit" value="Submit" />
+				            </div>
+			
+				        </form>
+				    </div>
+				</div>
+			</div>
+			</div>
+			        
+	</body>
+</html>

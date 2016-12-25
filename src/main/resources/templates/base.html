@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+		<div th:include="style"> style </div>	
+		<title>Layout page</title>
+</head>
+<body class="blue-grey lighten-3">
+
+	 <header>	 
+		 <nav class="top-nav blue">
+	        <div class="container">
+	          <div class="nav-wrapper">
+	          	<ul class="left">
+	          		<li>
+			          	<span th:utext="${session.userEmail}"></span>
+			        </li>
+		          	<li  th:if="${warning}">
+			          	<span th:include="_warnings">warnings</span>
+			        </li>	
+	          	</ul>
+	          	          			          
+			  	<ul id="nav-mobile" class="right">
+	        		<li><a href="/logout">Logout<i class="large material-icons right">exit_to_app</i></a></li>        			
+	        	</ul>
+	        	
+	          </div>
+	        </div>
+	      </nav>	      
+	 </header>
+	 
+	  <div class="container">
+	  	  	  		
+	  	<div layout:fragment="content"></div>
+
+	  </div>
+     
+</body>
+</html>

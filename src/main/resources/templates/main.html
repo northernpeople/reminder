@@ -1,0 +1,85 @@
+<html layout:decorator="base">
+	<section layout:fragment="content">	
+		
+			<h5>New reminder:</h5>  
+
+    
+					<form class="form-horizontal" action="#" th:action="@{/add_reminder}" th:object="${reminder}" method="post">	
+  					    					
+    					
+					    <div class="row">	
+					    
+					    	<div class="col s4">
+						    	<div class="input-field">
+						    		<i class="small material-icons prefix">event_note</i>
+							    	<label class="active" for="remindOn">Datetime (dd/mm/yy hh:mm PM)</label>
+							    	<input type="text" th:field="*{remindOn}"/>
+							    	<ul>
+  										<li class="red-text" th:each="err : ${#fields.errors('remindOn')}" th:text="|Date ${err}|" />
+									</ul>
+						    	</div>
+					    	</div>
+					    	
+					    	<div class="col s3">
+						    	<div class="input-field">
+								   	<i class="small material-icons prefix">subject</i>
+							    	<label class="active" for="topic">Subject</label>	
+									<input type="text" th:field="*{topic}"/>
+									<ul>
+  										<li class="red-text" th:each="err : ${#fields.errors('topic')}" th:text="|Subject ${err}|" />
+									</ul>
+								</div>
+							</div>
+							
+							<div class="col s4">
+						    	<div class="input-field">	
+						    		<i class="small material-icons prefix">note</i>
+									<label class="active" for="text">Content</label>
+									<input type="text" th:field="*{text}"/>	  
+									<ul>
+  										<li class="red-text" th:each="err : ${#fields.errors('text')}" th:text="|Content ${err}|" />
+									</ul>     	
+								</div>
+							</div>
+							
+					    	
+					    	<div class="col s1">
+						        <div class="form-actions">
+						        	<input class="btn-floating btn-large waves-effect waves-light red" type="submit" value="add" />
+						        </div>
+					        </div>
+					        
+					     </div>
+				        
+				    </form>
+
+			
+			
+
+		    <h5 th:if="${reminders.size() == 0}"> You don't have any reminders</h5>    
+		    <h5 th:if="${reminders.size() > 0}"> Upcoming reminders:</h5>    
+		    
+		     <div class="row" th:each="r : ${reminders}">	
+					    
+					    	<div class="col s4" th:text="${r.remindOn}">
+					    	</div>
+					    	
+					    	<div class="col s3" th:text="${r.topic}">
+					    	</div>
+					    	
+					    	<div class="col s4" th:text="${r.text}">
+					    	</div>
+					    	
+					    	<div class="col s1">
+					    		<a 	th:href="@{/delete/{id}(id=${r.id})}"  
+			       					class="red-text"> delete
+			       				</a>
+					    	</div>
+					    	
+		    </div>
+
+	    
+    </section>
+
+</html>
+ 
