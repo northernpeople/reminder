@@ -20,6 +20,7 @@ import com.reminder.model.Reminder;
 import com.reminder.model.User;
 import com.reminder.service.EmailService;
 import com.reminder.service.UserService;
+import com.reminder.web.command.PasswordChange;
 
 
 @Controller
@@ -88,6 +89,40 @@ public class LoginController {
 	@RequestMapping(value = "/email_confirm_form", method = RequestMethod.GET)
 	public String confirmEmail(Model model) {
 		return "email_confirm";
+	}
+	
+	@RequestMapping(value="/change_password_form", method = RequestMethod.GET)
+	public String changePasswordForm(Model model){
+		model.addAttribute("request", new PasswordChange());
+		return "change_password_form";
+	}
+	
+	@RequestMapping(value="/change_password", method=RequestMethod.POST)
+	public String changePassword(@Valid PasswordChange request, Errors errors, RedirectAttributes model){
+		if(errors.hasErrors()){
+			model.addFlashAttribute("warning", "something is not right");
+			return "change_password_form";		
+		}
+		User current = currentUser();
+		if(current == null || ! BCrypt.checkpw(request.getOld(), current.getPassword())){
+			model.addFlashAttribute("warning", "please sign in again");
+			return "redirect:/";
+		}
+		if(! request.getNew1().equals(request.getNew2())){
+			errors.rejectValue("new2", "Match", "new passwords must match");
+			return "change_password_form";		
+		}
+		current.setPassword(request.getNew1());
+		userService.create(current);
+		emailService.send(current.getEmail(), 
+				"Your password for reminder service has been changed!", 
+				"Please contact your administrator if you did not change it");
+		return "redirect:/logout";
+	}
+	
+	
+	private User currentUser() {
+		return userService.byEmail((String) session.getAttribute("userEmail"));
 	}
 
 }
