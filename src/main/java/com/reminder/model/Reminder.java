@@ -19,7 +19,7 @@ public class Reminder {
 	
 	@ManyToOne
 	private User user;
-	
+		
 	@NotNull
 	private LocalDateTime remindOn;
 	

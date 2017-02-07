@@ -25,7 +25,7 @@ public class User {
 	@NotNull
 	@Size(min=7, max=255)
 	private String password;
-
+///
 	@Id
 	@GeneratedValue
 	private Long id;

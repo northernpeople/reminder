@@ -28,6 +28,7 @@ public class UserService {
 	
 	public User update(User user) {
 		return userRepo.saveAndFlush(user);
+		
 	}
 	
 	public User byEmail(String email){
