@@ -1,4 +1,7 @@
 # Reminder
+
+! Doesn't use spring security. If you want to build something like this project, use starter project!
+
 Spring boot app that can send reminders to your inbox.
 
 If you would like to send yourself reminders in the future, feel free to use this app!
